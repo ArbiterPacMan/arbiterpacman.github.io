@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=lua&amp;"></script>
+    <title>Documentation</title>
+    <script>
+      function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+      }
+      
+      function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+        document.body.style.backgroundColor = "white";
+      }
+      </script>
+</head>
+<body>
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#whatisit">What is It</a>
+    <a href="#hosting">Hosting</a>
+    <a href="#usage">Usage</a>
+    <a href="#methods">Methods</a>
+  </div>
+<div class="main">
+  <div id="whatisit">
+    <h1 id="titleBar">robloxpuppetapi Documentation</h1>
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu <a href="https://github.com/ArbiterPacMan/robloxpuppetproxy" target="_blank">&#9672;View the GitHub</a></span>
+    <br>
+    <h1 class="topic">What is it?</h1>
+    <hr>
+    <p>If you didn't know, ROBLOX has blocked all requests from a ROBLOX game to the ROBLOX API. This is annoying since the API can be a fun tool to use for developers. The ROBLOX API can for example get how many players are currently in your game in all servers combined. But, due to ROBLOX stopping players from accessing the API within a game, we need an API proxy.</p>
+    <p>If you are here, you want to know how to setup your own. Luckily, I have made the API for you, but you must host it. I will show you how to host your API proxy on replit and how to use it through ROBLOX.</p>
+    <p>Also, using this code means you will credit me in some way. Forking/editing my code is OK, as long as you give original credits. Don't be a skid, I'm looking at you..</p>
+    <p>Go ahead, click the link to go to the GitHub and download the API code.</p>
+    <a href="https://github.com/ArbiterPacMan/robloxpuppetproxy" target="_blank">View the GitHub</a>
+    <br>
+    <hr>
+  </div>
+    <!--Whats up random dude using inspect edit!!-->
+    <div id="hosting">
+    <h1 class="topic">Setting Up and Hosting</h1>
+    <hr>
+    <p>First off, after you downloaded the files, you must create an account on replit. After that, create a new repl as a Node.js project. Your project should look like this but without any code:</p>
+    <img src="images/repl1.png" width="400" height="300" alt="tutorial image">
+    <p>Then import all the files that you downloaded EXCEPT the README.md</p>
+    <p>Try running the code by pressing the run button on the right (it should spend a minute installing Express and other packages). If there are no errors in the console, and above it shows a URL, your good! (ignore the Cannot GET / message)</p>
+    <p>Now, we need to keep the API running 24/7 so that it doesnt go offline. Make sure you are running the API and copy the URL replit gives you above the console, and create an account on UptimeRobot. Create a new monitor with type HTTP(s). Change the friendly name to whatever you want and the URL to the URL that replit gave you. Dont change anything else, and now you have a 24/7 proxy API!</p>
+    <p><b>Keep note that this a free hosting method. If you plan on sending thousands of requests every few minutes, I suggest buying a VPS.</b></p>
+    <hr>
+  </div>
+  <div id="usage">
+    <h1 class="topic">Using within ROBLOX</h1>
+    <pre class="prettyprint">
+local function GetGameInfo(data)
+  local request = http:GetAsync("https://YOURURL/api/GetGameInfo/" .. game.GameId) -- Change the URL to yours!!
+  request = http:JSONDecode(request)
+  return request.gameInfo[data]
+end
+    </pre>
+    <p>Above is an example of how to use the API proxy within ROBLOX. HTTP requests must be on for this to work. This code will make a function that can get the games data using its GameId.</p>
+    <pre class="prettyprint">
+      print(tostring(GetGameInfo("playing"))) -- Print the current players in a game
+    </pre>
+    <p>This is an example of how to call the function.</p>
+    <p>Now that you know how to use, it lets talk about the things you can do!</p>
+    <hr>
+  </div>
+  <div id="methods">
+    <h1 class="topic">Methods</h1>
+    <hr>
+    <table style="height: 70px; width: auto;">
+      <tr>
+          <th>Type</th>
+          <th>URL</th>
+          <th>Description</th>
+          <th>Response Format</th>
+      </tr>
+      <tr>
+        <td><code class="get">GET</code></td>
+        <td>/api/GetGameInfo/{gameId}</td>
+        <td>Returns information about a game</td>
+        <td>JSON</td>
+      </tr>
+    </table>
+  </div>
+  </div>
+</body>
+</html>
