@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style type="text/css">
+        *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #main {
+            width: 100vw;
+            max-width: 540px;
+            height: 100vh;
+            box-shadow: inset 0 0 10px 4px #1116;
+        }
+
+        h2 {
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        #msg_area {
+            height: 82%;
+            padding: 0 12px;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+        }
+
+        #bot {
+            width: 50px;
+            height: 50px;
+            background: url(bot.png);
+            background-size: 100%;
+            border-radius: 50%;
+            margin: 10px;
+        }
+
+        #robot {
+            display: flex;
+            align-items: center;
+        }
+
+        h3 {
+            font-family: monospace;
+            font-size: 20px;
+        }
+
+        #input {
+            height: 7%;
+            min-height: 42px;
+            display: grid;
+            grid-template-columns: 70% 30%;
+            margin: 8px 16px;
+            border-radius: 32px;
+        }
+
+        #text {
+            outline: none;
+            font-size: 20px;
+            background: #ececee;
+            color: #333;
+        }
+
+        .left {
+            color: #000;
+            background: #b3bfca;
+        }
+
+        .right {
+            float: right;
+            color: rgb(255, 255, 255);
+            background: #0b71d1;
+        }
+
+        .left, .right{
+            font-size: 18px;
+            font-family: monospace;
+            display: inline-block;
+            width: auto;
+            max-height: 60%;
+            padding: 14px;
+            word-wrap: break-word;
+            margin: 8px, 14px;
+        }
+
+        .msgCon1, .msgCon2 {
+            width: 100%;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body onload="start()">
+    <div id="main">
+        <h2>ChatBot</h2>
+
+    <div id="msg_area">
+        <div id="robot">
+            <div id="bot"></div>
+            <h3>ChatBot</h3>
+        </div>
+        </div>
+
+        <div id="input">
+            <input type="text" placeholder="Message" id="text">
+            <button id="send">Send <i class="fa fa-paper-plane"></i></button>
+        </div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</body>
+
+<script type="text/javascript">
+    function start() {
+        let res_msg = document.createElement('div');
+        res_msg.innerHTML = "Hello, how may I help you?";
+        res_msg.setAttribute("class", "left");
+        document.getElementById("msg_area").appendChild(res_msg);
+    }
+
+    document.getElementById("send").addEventListener("click", async (e) => {
+        e.preventDefault();
+        var req = document.getElementById("text").value;
+        if (req == undefined || req == "") {
+
+        }
+        else {
+            let res = "";
+
+            await axios.get(`https://api.monkedev.com/fun/chat?msg=${req}`).then(data => {
+                res = JSON.stringify(data.data.response)
+            })
+
+            let msg_req = document.createElement('div');
+            let msg_res = document.createElement('div');
+
+            let Con1 = document.createElement('div');
+            let Con2 = document.createElement('div');
+
+            Con1.setAttribute("class", "msgCon1")
+            Con2.setAttribute("class", "msgCon2")
+
+            msg_req.innerHTML = req;
+            msg_res.innerHTML = res;
+
+            msg_req.setAttribute("class", "right");
+            msg_res.setAttribute("class", "left");
+
+            let message = document.getElementById("msg_area");
+
+            message.appendChild(Con1);
+            message.appendChild(Con2);
+
+            Con1.appendChild(msg_req);
+            Con2.appendChild(msg_res);
+
+            document.getElementById("text").value = "";
+        }
+    });
+</script>
+
+</html>
