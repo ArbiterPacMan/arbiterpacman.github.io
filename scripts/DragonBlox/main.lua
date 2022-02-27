@@ -14,7 +14,18 @@ local args1 = {
     }
 }
 
+local sprintargs = {
+    [1] = true
+}
 
+local kaioargs = {
+    [1] = "Technique",
+    [2] = true,
+    [3] = CFrame.new(Vector3.new(1783.717529296875, 584.3021850585938, 1270.7852783203125), Vector3.new(0.26763680577278137, -0.37835949659347534, -0.8861233592033386)),
+    [4] = CFrame.new(Vector3.new(1787.06298828125, 577.99267578125, 1259.708740234375), Vector3.new(-0.8902071714401245, 8.718783917061046e-09, 0.45555588603019714)),
+    [5] = CFrame.new(Vector3.new(1788.3323974609375, 574.7528076171875, 1258.668701171875), Vector3.new(0.2866225838661194, -0.5930206775665283, -0.7524453401565552)),
+    [7] = game:GetService("Players").LocalPlayer.Character.LeftUpperLeg
+}
 
 
 
@@ -56,6 +67,14 @@ if getgenv().Key == "yanderepacman" then
         end
     end)
 
+    FarmsTab:CreateToggle("Auto Kaioken", function (arg)
+        _G.autoKaioken = arg
+        while _G.autoKaioken == true do
+            wait()
+            game:GetService("ReplicatedStorage").Remotes.SkillRemote:FireServer(unpack(kaioargs))
+        end
+    end)
+
     FakeStats:CreateButton("Infinite Power", function ()
         game:GetService("RunService").RenderStepped:Connect(function(step)
             game:GetService("Players").LocalPlayer.Stats.Power.Value = 69696969696969
@@ -74,6 +93,14 @@ if getgenv().Key == "yanderepacman" then
             wait()
             local name = tostring(game.Players.LocalPlayer.Name)
             game:GetService("Workspace").Characters[name].Status.CurrentEnergy.Value = 9999
+        end
+    end)
+
+    MiscTab:CreateToggle("Auto Sprint", function (arg)
+        _G.autosprint = arg
+        while _G.autosprint == true do
+            wait()
+            game:GetService("ReplicatedStorage").Aero.AeroRemoteServices.Props.FlightService.Sprint:FireServer(unpack(sprintargs))
         end
     end)
 
