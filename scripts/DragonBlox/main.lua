@@ -85,4 +85,6 @@ if getgenv().Key == "yanderepacman" then
         end
     end)
 
+else
+    game.Players.LocalPlayer:Kick("are you trying to skid pacman you idiot you cant do that")
 end
